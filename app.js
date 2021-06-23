@@ -8,11 +8,14 @@ const app = express();
 // middleware
 app.use(express.static('public'));
 
+//takes json on post req and parse itinto js object and attached it to req
+app.use(express.json());
+
 // view engine
 app.set('view engine', 'ejs');
 
 // database connection
-const dbURI = 'mongodb+srv://user:passs@cluster0.cqyh9.mongodb.net/node-auth?retryWrites=true&w=majority';
+const dbURI = 'mongodb+srv://user:pass@cluster0.cqyh9.mongodb.net/node-auth?retryWrites=true&w=majority';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));

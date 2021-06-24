@@ -1,16 +1,21 @@
 const mongoose = require('mongoose');
 
+// email shoud match with db email with validator (npm install validator)
+const { isEmail } = require('validator');
+
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
+    required: [true, 'Please enter an email'],
     unique: true,
     lowercase: true,
+    // email shoud match with db email
+    validate: [isEmail, 'Please enter a valid email']
   },
   password: {
     type: String,
-    required: true,
-    minlength: 6,
+    required: [true, 'Please enter an password'],
+    minlength: [6, 'Minimu, password lenght is 6 charactesrs']
   }
 });
 

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// email shoud match with db email with validator (npm install validator)
+// email should match with db email with validator (npm install validator)
 const { isEmail } = require('validator');
 
 const userSchema = new mongoose.Schema({

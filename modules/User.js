@@ -19,6 +19,18 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+//fire a function after doc saved to db
+userSchema.post('save', function(doc, next){
+  console.log('new user was created & saved', doc);
+  next();
+});
+
+// fire function before doc saved db. 'this' is local created user info
+userSchema.pre('save', function(next){
+  console.log('user about to be created & saved', this);
+  next();
+})
+
 //connect to MongoDb collection 
 const User = mongoose.model('user', userSchema);
 

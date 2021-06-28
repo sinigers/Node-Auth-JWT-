@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // email should match with db email with validator (npm install validator)
 const { isEmail } = require('validator');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -19,17 +20,16 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-//fire a function after doc saved to db
-userSchema.post('save', function(doc, next){
-  console.log('new user was created & saved', doc);
-  next();
-});
 
 // fire function before doc saved db. 'this' is local created user info
-userSchema.pre('save', function(next){
-  console.log('user about to be created & saved', this);
+userSchema.pre('save', async function(next){
+  // console.log('user about to be created & saved', this);
+
+ //add 'salt befeore pass' and next hashing pass
+ const salt = await bcrypt.genSalt();
+ this.password = await bcrypt.hash(this.password, salt)
   next();
-})
+});
 
 //connect to MongoDb collection 
 const User = mongoose.model('user', userSchema);
